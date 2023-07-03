@@ -1,0 +1,35 @@
+.message-input {
+    width: 60%;
+    height: 40px;
+    border-radius: 10px;
+    margin: 5px;
+    padding-left: 10px;
+    text-align: left;
+}
+
+.sign-button {
+    border-radius: 10px;
+    height: 40px;
+    width: 60px;
+}
+
+.sign-container, .signature-container {
+    padding-top: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.signature {
+    padding-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.error-message {
+    color: red;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}

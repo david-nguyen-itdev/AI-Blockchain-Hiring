@@ -4,8 +4,16 @@ import PlayersTable from 'views/PlayersTable.js';
 import CaposList from 'views/CaposList';
 import UserProfile from 'views/UserProfile.js';
 import TestCommand from 'views/TestCommand.js';
+import SignPage from 'views/SignPage';
 
 const routes = [
+  {
+    path: '/sign',
+    name: 'SIGN',
+    icon: 'tim-icons icon-chart-pie-36',
+    component: SignPage,
+    layout: '/sign'
+  },
   {
     path: '/home',
     name: 'HOME',

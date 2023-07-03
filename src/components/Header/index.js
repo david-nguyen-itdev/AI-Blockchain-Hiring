@@ -1,13 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 // reactstrap components
 import { Row, Col } from 'reactstrap';
 import { Link} from 'react-router-dom';
+import { useAccount, useConnect, useDisconnect } from 'wagmi'
+import { InjectedConnector } from 'wagmi/connectors/injected'
 
 
 import './index.scss';
 function HomePage() {
 
-  const [isConnected, setIsConnected] = useState(false);
+  const { isConnected, address } = useAccount()
+  const { connect } = useConnect({
+    connector: new InjectedConnector(),
+  })
+  const { disconnect } = useDisconnect()
 
   useEffect(() => {
     // Check if Metamask is installed
@@ -16,15 +22,9 @@ function HomePage() {
     }
   }, []);
 
-  const connectWallet = async () => {
-    try {
-      // Request access to the user's Metamask wallet
-      await window.ethereum.request({ method: 'eth_requestAccounts' });
-      setIsConnected(true);
-    } catch (error) {
-      console.error('Failed to connect to wallet:', error);
-    }
-  };
+  const shortAddress = () => {
+    return address.slice(0, 6) + '...' + address.slice(address.length - 4, address.length);
+  }
 
   return (
     <Row className="padding-32">
@@ -37,18 +37,28 @@ function HomePage() {
           HOME
         </Link>{' '}
         <span>/</span>
-        <Link to="/about" className="margin-12">
-          ABOUT
-        </Link>{' '}
+        <Link to="/sign" className="margin-12">
+          SIGN
+        </Link>
         <span>/</span>
-        <Link to="/loginpage" className="margin-12">
-          LOGIN
+        <Link to="/transfer" className="margin-12">
+          TRANSFER
         </Link>
       </Col>
       <Col xs="4" className="logo" >
-        <a className="margin-12" onClick={connectWallet}>
-          {isConnected ? 'Connected' : 'Connect Wallet'}
-        </a>
+        {isConnected ? (
+          <div className="connected">
+            <a className="margin-12 pointer" onClick={() => disconnect()}>
+              Disconnect
+            </a>
+            <div>Connected wallet: {shortAddress()}</div>            
+          </div>
+        ) : (
+          <a className="margin-12 pointer" onClick={() => connect()}>
+            Connect Wallet
+          </a>
+        )}
+        
       </Col>
     </Row>
   );

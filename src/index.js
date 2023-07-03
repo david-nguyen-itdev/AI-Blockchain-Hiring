@@ -34,26 +34,42 @@ import './index.scss';
 
 import ThemeContextWrapper from './components/ThemeWrapper/ThemeWrapper';
 import BackgroundColorWrapper from './components/BackgroundColorWrapper/BackgroundColorWrapper';
+import SignPage from 'views/SignPage';
+import TransferPage from 'views/TransferPage';
+import { WagmiConfig, createConfig, mainnet } from 'wagmi';
+import { createPublicClient, http } from 'viem';
+
+const config = createConfig({
+  autoConnect: true,
+  publicClient: createPublicClient({
+    chain: mainnet,
+    transport: http()
+  }),
+})
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const isWindows = navigator.platform.includes('Win');
 
 if (isWindows) {
   root.render(
-    <ThemeContextWrapper>
-      <BackgroundColorWrapper>
-        <BrowserRouter>
-          <Switch>
-            <Route path="/home" render={() => <HomePage />} />
-            <Route path="/loginpage" render={() => <LoginPage />} />
-            <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-            <Route path="/login" render={() => <Login />} />
-            <Route path="/register" render={() => <Register />} />
-            <Redirect from="*" to="/home" />
-          </Switch>
-        </BrowserRouter>
-      </BackgroundColorWrapper>
-    </ThemeContextWrapper>
+    <WagmiConfig config={config}>
+      <ThemeContextWrapper>
+        <BackgroundColorWrapper>
+          <BrowserRouter>
+            <Switch>
+              <Route path="/sign" render={() => <SignPage />} />
+              <Route path="/transfer" render={() => <TransferPage />} />
+              <Route path="/home" render={() => <HomePage />} />
+              <Route path="/loginpage" render={() => <LoginPage />} />
+              <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
+              <Route path="/login" render={() => <Login />} />
+              <Route path="/register" render={() => <Register />} />
+              <Redirect from="*" to="/home" />
+            </Switch>
+          </BrowserRouter>
+        </BackgroundColorWrapper>
+      </ThemeContextWrapper>
+    </WagmiConfig>
   );
 } else {
   ReactDOM.render(<div>Sorry, this application is only supported on Windows.</div>, document.getElementById('root'));

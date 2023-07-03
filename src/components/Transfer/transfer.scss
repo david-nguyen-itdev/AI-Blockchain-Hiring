@@ -1,0 +1,44 @@
+.transfer-container {
+    padding-top: 10%;
+    display: block;
+    text-align: -webkit-center;
+}
+.message-input {
+    width: 60%;
+    height: 40px;
+    border-radius: 10px;
+    margin: 5px;
+    text-align: left;
+}
+
+.receiver {
+    padding-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.amount, .send-button {
+    padding-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.send-button {
+    button {
+        width: 80px;
+    }
+}
+
+.error-message {
+    color: red;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.transaction-hash {
+    font-style: italic;
+    color: #28a745;
+}
